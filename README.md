@@ -167,6 +167,19 @@ black src/ tests/
 - [ ] **v1.3** – Visual UI to generate projects  
 - [ ] **v2.0** – Terraform state & drift detection  
 
+## 🧠 Mentors
+
+<p align="center">
+  <img src="https://github.com/manav108-hub.png" alt="Mentor 1" width="100" height="100" style="border-radius: 50%;" />
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="https://github.com/Sakshambh09.png" alt="Mentor 2" width="100" height="100" style="border-radius: 50%;" />
+</p>
+
+<p align="center">
+  <strong>Manav Adwani</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <strong>Saksham Bhardwaj</strong>
+</p>
+
 ## 📝 License
 
 This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
