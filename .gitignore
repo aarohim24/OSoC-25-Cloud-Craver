@@ -150,3 +150,15 @@ override.tf
 override.tf.json
 terraform.tfvars
 *.tfplan
+
+# SQLite
+db.sqlite3
+db.sqlite3-journal
+
+# Misc
+*.mo
+*.pot
+*.log
+local_settings.py
+**/.terraform/
+
