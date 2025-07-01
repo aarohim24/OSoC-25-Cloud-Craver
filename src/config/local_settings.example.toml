@@ -1,0 +1,69 @@
+# Local Settings Example for Cloud Craver
+# Copy this file to 'local_settings.toml' and customize for your local environment
+# This file should be gitignored and contains user-specific overrides
+
+[app]
+# Override app settings for local development
+debug = true
+log_level = "DEBUG"
+
+[cloud]
+# Override default cloud provider for local development
+default_provider = "aws"
+
+[cloud.aws]
+# AWS-specific local settings
+profile = "default"  # Change to your AWS profile
+region = "us-west-2"  # Change to your preferred region
+
+[cloud.azure]
+# Azure-specific local settings
+subscription_id = "your-subscription-id-here"
+resource_group_prefix = "rg-yourname"
+location = "West US 2"
+
+[cloud.gcp]
+# GCP-specific local settings
+project_id = "your-project-id-here"
+region = "us-west1"
+zone = "us-west1-a"
+
+[user]
+# Personal user preferences
+[user.preferences]
+default_provider = "aws"  # Your preferred provider
+default_region = "us-west-2"  # Your preferred region
+auto_save = true
+editor = "code"  # Your preferred editor (vim, code, nano, etc.)
+theme = "dark"  # Your preferred theme
+
+[terraform]
+# Local Terraform settings
+auto_init = true
+auto_plan = true  # Set to true if you want auto-planning in dev
+
+[terraform.validation]
+# Enable/disable validation features for local development
+enable_syntax_check = true
+enable_security_scan = false  # Disable for faster local testing
+enable_cost_estimation = false
+enable_drift_detection = false
+
+[paths]
+# Override paths for local development
+output_dir = "/tmp/cloudcraver-output"  # Use temp directory
+cache_dir = "/tmp/cloudcraver-cache"
+logs_dir = "./logs"
+
+[cli]
+# CLI preferences for local use
+show_progress = true
+colored_output = true
+interactive_mode = true
+
+# Development-only settings
+[development]
+debug = true
+log_level = "DEBUG"
+enable_hot_reload = true
+show_stack_traces = true 
