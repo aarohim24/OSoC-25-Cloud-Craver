@@ -1,3 +1,4 @@
+from templates.base import AWSTemplate, AzureTemplate, GCPTemplate, TemplateMetadata
 import click
 import os
 
