@@ -74,4 +74,3 @@ def validate(ctx, path):
 if __name__ == "__main__":
     cli()
 
-#I built the foundation of a CLI tool called that can generate pre-defined Terraform templates for different cloud providers (AWS, Azure, GCP),  Validate existing Terraform files in a directory,Support future enhancements like cost estimation, template rendering, and cloud deployment automation
