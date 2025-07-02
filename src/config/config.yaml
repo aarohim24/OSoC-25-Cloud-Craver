@@ -1,0 +1,202 @@
+# Cloud Craver YAML Configuration
+# This file provides additional configuration in YAML format
+
+# Cloud provider templates and resources
+cloud_templates:
+  aws:
+    compute:
+      - ec2
+      - ecs
+      - eks
+      - lambda
+      - batch
+    storage:
+      - s3
+      - ebs
+      - efs
+      - fsx
+    networking:
+      - vpc
+      - alb
+      - nlb
+      - cloudfront
+      - route53
+    database:
+      - rds
+      - dynamodb
+      - elasticache
+      - documentdb
+    
+  azure:
+    compute:
+      - virtual_machines
+      - aks
+      - container_instances
+      - functions
+      - batch
+    storage:
+      - storage_account
+      - managed_disks
+      - file_shares
+    networking:
+      - virtual_network
+      - load_balancer
+      - application_gateway
+      - traffic_manager
+    database:
+      - sql_database
+      - cosmos_db
+      - mysql
+      - postgresql
+    
+  gcp:
+    compute:
+      - compute_engine
+      - gke
+      - cloud_run
+      - cloud_functions
+      - dataflow
+    storage:
+      - cloud_storage
+      - persistent_disk
+      - filestore
+    networking:
+      - vpc
+      - load_balancer
+      - cloud_cdn
+      - cloud_dns
+    database:
+      - cloud_sql
+      - firestore
+      - bigtable
+      - memorystore
+
+# Resource naming patterns by provider
+naming_patterns:
+  aws:
+    ec2: "{env}-{project}-{component}-{instance_type}-{index:03d}"
+    s3: "{project}-{env}-{purpose}-{random}"
+    rds: "{env}-{project}-{engine}-{purpose}"
+    vpc: "{env}-{project}-vpc"
+    
+  azure:
+    vm: "vm-{env}-{project}-{component}-{index:03d}"
+    storage: "st{project}{env}{purpose}{random}"
+    sql: "sql-{env}-{project}-{purpose}"
+    vnet: "vnet-{env}-{project}"
+    
+  gcp:
+    compute: "{env}-{project}-{component}-{index:03d}"
+    storage: "{project}-{env}-{purpose}-{random}"
+    sql: "{env}-{project}-{engine}-{purpose}"
+    vpc: "{env}-{project}-vpc"
+
+# Security and compliance rules
+security_rules:
+  general:
+    - name: "no_hardcoded_secrets"
+      description: "Ensure no hardcoded secrets in configurations"
+      severity: "critical"
+      
+    - name: "encryption_at_rest"
+      description: "Ensure encryption at rest is enabled"
+      severity: "high"
+      
+    - name: "encryption_in_transit"
+      description: "Ensure encryption in transit is enabled"
+      severity: "high"
+      
+    - name: "public_access_restricted"
+      description: "Ensure public access is properly restricted"
+      severity: "high"
+
+  aws_specific:
+    - name: "s3_public_read_prohibited"
+      description: "S3 buckets should not allow public read access"
+      severity: "high"
+      
+    - name: "ec2_security_groups_restricted"
+      description: "EC2 security groups should not allow 0.0.0.0/0 ingress"
+      severity: "medium"
+      
+    - name: "rds_encryption_enabled"
+      description: "RDS instances should have encryption enabled"
+      severity: "high"
+
+# Cost optimization recommendations
+cost_optimization:
+  aws:
+    - resource: "ec2"
+      recommendations:
+        - "Use Spot Instances for non-critical workloads"
+        - "Right-size instances based on utilization"
+        - "Use Reserved Instances for predictable workloads"
+        
+    - resource: "s3"
+      recommendations:
+        - "Use appropriate storage classes"
+        - "Enable lifecycle policies"
+        - "Use compression for large objects"
+        
+  azure:
+    - resource: "virtual_machines"
+      recommendations:
+        - "Use Azure Reserved VM Instances"
+        - "Enable auto-shutdown for dev/test VMs"
+        - "Use appropriate VM sizes"
+        
+  gcp:
+    - resource: "compute_engine"
+      recommendations:
+        - "Use committed use discounts"
+        - "Use preemptible instances for batch workloads"
+        - "Right-size based on monitoring data"
+
+# Integration settings
+integrations:
+  git:
+    auto_commit: false
+    commit_message_template: "feat: {action} {resource_type} configuration"
+    
+  ci_cd:
+    supported_platforms:
+      - github_actions
+      - gitlab_ci
+      - azure_devops
+      - jenkins
+      
+  monitoring:
+    supported_tools:
+      - prometheus
+      - grafana
+      - datadog
+      - new_relic
+      
+  secret_management:
+    supported_tools:
+      - aws_secrets_manager
+      - azure_key_vault
+      - gcp_secret_manager
+      - hashicorp_vault
+
+# Plugin system configuration
+plugins:
+  enabled: true
+  auto_discover: true
+  search_paths:
+    - "plugins"
+    - "~/.cloudcraver/plugins"
+    - "/etc/cloudcraver/plugins"
+    
+  builtin_plugins:
+    - name: "terraform_validator"
+      enabled: true
+      
+    - name: "cost_estimator"
+      enabled: false
+      
+    - name: "security_scanner"
+      enabled: true
+      
+    - name: "drift_detector"
+      enabled: false 

@@ -1,0 +1,27 @@
+# Base Configuration for Cloud Craver
+# This file contains the minimal required configuration that all environments inherit
+
+[app]
+name = "Cloud Craver"
+version = "1.0.0"
+
+[cloud]
+# Minimum required cloud provider configuration
+default_provider = "aws"
+providers = ["aws"]
+
+[user]
+# Minimal user preferences
+[user.preferences]
+auto_save = false
+confirm_destructive_actions = true
+
+[paths]
+# Default paths (can be overridden)
+templates_dir = "templates"
+output_dir = "output"
+
+[validation]
+# Basic validation settings
+strict_mode = false
+fail_on_warnings = false 

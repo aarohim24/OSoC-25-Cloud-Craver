@@ -1,0 +1,132 @@
+# Cloud Craver Configuration File
+# This file contains the default configuration for the Cloud Craver application
+
+[app]
+name = "Cloud Craver"
+version = "1.0.0"
+description = "A powerful tool for generating, validating, and managing cloud infrastructure templates"
+debug = false
+log_level = "INFO"
+output_format = "rich"  # Options: "rich", "json", "text"
+
+[cloud]
+# Default cloud provider
+default_provider = "aws"
+
+# Supported cloud providers
+providers = ["aws", "azure", "gcp"]
+
+# Default regions for each provider
+[cloud.default_regions]
+aws = "us-east-1"
+azure = "East US"
+gcp = "us-central1"
+
+# Cloud provider specific settings
+[cloud.aws]
+profile = "default"
+region = "us-east-1"
+output_format = "json"
+
+[cloud.azure]
+subscription_id = ""
+resource_group_prefix = "rg-cloudcraver"
+location = "East US"
+
+[cloud.gcp]
+project_id = ""
+region = "us-central1"
+zone = "us-central1-a"
+
+[user]
+# User preferences and personalization
+[user.preferences]
+default_provider = "aws"
+default_region = "us-east-1"
+auto_save = true
+confirm_destructive_actions = true
+theme = "auto"  # Options: "auto", "light", "dark"
+editor = "vim"  # Default editor for config files
+
+# Recently used settings (will be updated by the application)
+[user.recent]
+providers = []
+regions = []
+templates = []
+
+[terraform]
+# Terraform-specific configuration
+version = "latest"
+auto_init = true
+auto_plan = false
+auto_apply = false
+state_backend = "local"  # Options: "local", "s3", "azurerm", "gcs"
+
+# Terraform validation settings
+[terraform.validation]
+enable_syntax_check = true
+enable_security_scan = true
+enable_cost_estimation = false
+enable_drift_detection = false
+
+# Security scanning tools configuration
+[terraform.security]
+tfsec_enabled = true
+checkov_enabled = true
+terrascan_enabled = false
+custom_rules_enabled = true
+
+[validation]
+# General validation settings
+strict_mode = false
+fail_on_warnings = false
+generate_reports = true
+report_format = "json"  # Options: "json", "html", "text"
+
+# Custom validation rules
+[validation.naming_conventions]
+enabled = true
+resource_name_pattern = "^[a-z][a-z0-9-]*[a-z0-9]$"
+tag_requirements = ["Environment", "Project", "Owner"]
+
+[validation.tagging_standards]
+enabled = true
+required_tags = ["Environment", "Project", "Owner", "CostCenter"]
+allowed_environments = ["dev", "staging", "prod"]
+
+[paths]
+# Directory paths for templates, outputs, etc.
+templates_dir = "templates"
+output_dir = "output"
+cache_dir = ".cache"
+logs_dir = "logs"
+
+[generation]
+# Template generation settings
+default_template_engine = "jinja2"
+include_comments = true
+include_examples = true
+generate_readme = true
+generate_variables_file = true
+generate_outputs_file = true
+
+[cli]
+# CLI-specific settings
+show_progress = true
+colored_output = true
+interactive_mode = true
+confirm_actions = true
+
+# Development environment settings
+[development]
+debug = true
+log_level = "DEBUG"
+enable_hot_reload = true
+show_stack_traces = true
+
+# Production environment settings
+[production]
+debug = false
+log_level = "INFO"
+enable_hot_reload = false
+show_stack_traces = false 
