@@ -60,3 +60,16 @@ aiohttp
 
 # JSON Processing Enhancements
 orjson
+
+pyhcl2
+pyyaml
+
+-r requirements.txt
+
+# Development dependencies
+pytest
+black
+flake8
+isort
+pre-commit
+
