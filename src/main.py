@@ -111,7 +111,7 @@ class CloudCraverApp:
 
     async def initialize_plugin_system(self):
         try:
-            from src.terraform_validator.core import PluginManager
+            from terraform_validator.core import PluginManager
             self.plugin_manager = PluginManager(
                 config=self.config["plugins"],
                 data_dir=self.config["app"]["data_dir"],
@@ -161,7 +161,7 @@ def init(ctx):
 @click.pass_context
 def validate(ctx, path):
     """Run Terraform validation."""
-    from src.terraform_validator.validate import validate_directory
+    from terraform_validator.validator_dir.validate import validate_directory
     try:
         result = validate_directory(path)
         console.print(f"[green]Validation successful[/green]: {result}")
