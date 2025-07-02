@@ -1,0 +1,162 @@
+# Cloud Craver Plugin System Configuration
+# This file configures the plugin system behavior and security settings
+
+plugin_system:
+  # Global plugin system settings
+  enabled: true
+  debug_mode: false
+  max_concurrent_plugins: 10
+  plugin_timeout: 30  # seconds
+  
+  # Plugin discovery settings
+  discovery:
+    search_paths:
+      - "plugins"
+      - "~/.cloudcraver/plugins"
+      - "/usr/local/share/cloudcraver/plugins"
+    auto_discovery: true
+    scan_interval: 3600  # seconds (1 hour)
+    
+  # Plugin loading configuration
+  loader:
+    isolation: true
+    temp_dir: "/tmp/cloudcraver_plugins"
+    max_size: 104857600  # 100MB
+    allowed_extensions:
+      - ".py"
+      - ".json"
+      - ".yaml"
+      - ".yml"
+      - ".txt"
+      - ".md"
+  
+  # Plugin validation settings
+  validator:
+    strict_mode: false
+    max_file_size: 1048576  # 1MB
+    signature_verification: false
+    allowed_imports:
+      - "json"
+      - "yaml"
+      - "logging"
+      - "datetime"
+      - "typing"
+      - "pathlib"
+      - "dataclasses"
+      - "enum"
+      - "abc"
+      - "asyncio"
+  
+  # Security and sandboxing
+  security:
+    enabled: true
+    max_cpu_time: 30
+    max_memory: 104857600  # 100MB
+    max_file_size: 10485760  # 10MB
+    network_access: false
+    allowed_paths:
+      - "/tmp"
+      - "/var/tmp"
+    temp_dir: "/tmp/cloudcraver_sandbox"
+  
+  # Dependency management
+  dependencies:
+    strict_versioning: true
+    auto_install: false
+    resolve_conflicts: true
+    max_dependency_depth: 5
+  
+  # Plugin marketplace
+  marketplace:
+    repositories:
+      - "https://plugins.cloudcraver.io/api"
+      - "https://community.cloudcraver.io/api"
+    cache_dir: "cache/marketplace"
+    cache_ttl: 3600  # 1 hour
+    security_scanning: true
+    api_keys: {}
+  
+  # Version management
+  versioning:
+    auto_update: false
+    check_interval: 86400  # 24 hours
+    backup_before_update: true
+    max_backups: 5
+
+# Default permissions for plugin types
+default_permissions:
+  template:
+    - "file_read"
+    - "temp_write"
+  provider:
+    - "file_read"
+    - "temp_write"
+    - "network_access"
+  validator:
+    - "file_read"
+  generator:
+    - "file_read"
+    - "file_write"
+    - "temp_write"
+  hook:
+    - "file_read"
+  extension:
+    - "file_read"
+    - "temp_write"
+
+# Plugin-specific configurations
+plugins:
+  aws-s3-template:
+    enabled: true
+    config:
+      default_region: "us-east-1"
+      enable_logging: true
+      bucket_prefix: "cloudcraver-"
+      default_encryption: "AES256"
+  
+  custom-validator:
+    enabled: true
+    config:
+      strict_mode: false
+      rules:
+        naming_convention:
+          enabled: true
+          pattern: "^[a-z][a-z0-9-]*[a-z0-9]$"
+          message: "Resource names must be lowercase with hyphens"
+        required_tags:
+          enabled: true
+          tags:
+            - "Environment"
+            - "Project"
+            - "Owner"
+          message: "All resources must have required tags"
+        encryption_required:
+          enabled: true
+          message: "All storage resources must have encryption enabled"
+        
+# Hook configuration
+hooks:
+  # Core system hooks
+  system_startup: []
+  system_shutdown: []
+  plugin_loaded: []
+  plugin_unloaded: []
+  
+  # Template hooks
+  template_create: []
+  template_validate: []
+  template_generate: []
+  template_render: []
+  
+  # Validation hooks
+  validate_template: []
+  validate_resource: []
+  validate_configuration: []
+
+# Logging configuration for plugins
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/plugins.log"
+  max_size: 10485760  # 10MB
+  backup_count: 5 
