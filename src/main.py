@@ -16,6 +16,12 @@ from rich.console import Console
 from rich.logging import RichHandler
 from rich.traceback import install
 
+# --- Import State Modules Path Dynamically ---
+BASE_DIR = Path(__file__).resolve().parent
+STATE_DIR = BASE_DIR / "state"
+if STATE_DIR.exists() and str(STATE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
 # Rich initialization
 install(show_locals=True)
 console = Console()
@@ -153,7 +159,7 @@ def init(ctx):
     async def _init():
         app = get_app()
         await app.initialize_plugin_system()
-        console.print("[green]✓ Initialization complete[/green]")
+        console.print("[green]\u2713 Initialization complete[/green]")
     asyncio.run(_init())
 
 @cli.command()
@@ -175,6 +181,62 @@ def validate(ctx, path):
 def hello(message):
     console.print(f"[green]{message}[/green]")
     console.print(f"[cyan]Cloud Craver v{APP_VERSION} is working![/cyan]")
+
+# --- STATE COMMANDS ---
+@cli.group()
+def state():
+    """Manage Terraform state."""
+    pass
+
+@state.command()
+@click.argument("provider", type=click.Choice(["s3", "azure", "gcs"]))
+@click.argument("bucket")
+@click.option("--region", help="Cloud region")
+def configure_backend(provider, bucket, region):
+    from state.backend import configure_remote_backend
+    configure_remote_backend(provider, bucket, region)
+
+@state.command()
+@click.argument("workspace")
+def create_workspace(workspace):
+    from state.workspace import create_workspace
+    create_workspace(workspace)
+
+@state.command()
+@click.argument("workspace")
+def switch_workspace(workspace):
+    from state.workspace import switch_workspace
+    switch_workspace(workspace)
+
+@state.command()
+@click.argument("workspace")
+def delete_workspace(workspace):
+    from state.workspace import delete_workspace
+    delete_workspace(workspace)
+
+@state.command()
+@click.argument("backend")
+def migrate(backend):
+    from state.migrate import migrate_state_backend
+    migrate_state_backend(backend)
+
+@state.command()
+@click.argument("path")
+def detect_drift(path):
+    from state.drift import detect_state_drift
+    detect_state_drift(path)
+
+@state.command()
+@click.argument("path")
+def cleanup(path):
+    from state.cleanup import cleanup_state_files
+    cleanup_state_files(path)
+
+@state.command()
+@click.argument("env")
+def use_environment(env):
+    from state.environments import use_environment
+    use_environment(env)
 
 # --- Entry Point ---
 def main():
