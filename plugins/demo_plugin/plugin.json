@@ -1,0 +1,17 @@
+{
+  "name": "demo-plugin",
+  "version": "1.0.0",
+  "description": "A simple demo plugin for testing Cloud Craver",
+  "author": "Cloud Craver Team",
+  "email": "demo@cloudcraver.io",
+  "type": "template",
+  "main_class": "DemoPlugin",
+  "module_path": "demo_plugin",
+  "license": "MIT",
+  "keywords": ["demo", "test", "example"],
+  "categories": ["templates", "demo"],
+  "min_core_version": "1.0.0",
+  "dependencies": [],
+  "hooks": ["template_create"],
+  "permissions": ["file_read", "temp_write"]
+} 
