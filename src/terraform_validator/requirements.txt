@@ -1,2 +1,0 @@
-pyhcl2
-pyyaml
