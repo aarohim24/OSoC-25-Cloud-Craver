@@ -1,0 +1,38 @@
+name: Terraform Validate
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+      - '**'  
+
+jobs:
+  terraform-validate:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        folder:
+          - terraform_templates/vpc
+          - terraform_templates/ec2
+          - terraform_templates/s3
+          - terraform_templates/rds
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.8.0
+
+      - name: Terraform Init
+        working-directory: ${{ matrix.folder }}
+        run: terraform init -backend=false
+
+      - name: Terraform Validate
+        working-directory: ${{ matrix.folder }}
+        run: terraform validate

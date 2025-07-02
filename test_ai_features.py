@@ -1,0 +1,44 @@
+from cloudcraverscript.ai_assistant import analyzer, generator, recommender, security, monitor
+
+print("Analyzer Suggestions:")
+print(analyzer.analyze_template('sample-template.yaml'))
+print()
+
+print("Resource Sizing Recommendations:")
+print(recommender.recommend_resource_sizes({
+    "res1": {"cpu": 82},
+    "res2": {"cpu": 45}
+}))
+print()
+
+print("Cost Optimization Suggestions:")
+print(recommender.recommend_cost_saving({
+    "res1": {"uptime": 5},
+    "res2": {"uptime": 60}
+}))
+print()
+
+print("Predictive Scaling Suggestion:")
+print(recommender.recommend_scaling([10, 30, 45, 90]))
+print()
+
+print("Security Vulnerability Scan:")
+with open('sample-template.yaml', 'r') as f:
+    template_data = f.read()
+print(security.detect_vulnerabilities(template_data))
+print()
+
+print("Compliance Check:")
+with open('sample-template.yaml', 'r') as f:
+    template_data = f.read()
+compliant, messages = security.check_compliance(template_data)
+print("Compliant:", compliant)
+print("Messages:", messages)
+print()
+
+print("Generated Template from Prompt:")
+print(generator.generate_template("Create a secure EC2 instance with S3 bucket"))
+print()
+
+print("Monitoring Configuration:")
+print(monitor.generate_monitoring_config(["EC2Instance", "S3Bucket"]))
